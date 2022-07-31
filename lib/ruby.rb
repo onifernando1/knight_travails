@@ -53,12 +53,6 @@ class Board attr_accessor :board
             end 
         end 
 
-        #     @string = " \u265E " 
-        #     @piece =  @string.encode("utf-8").light_white
-
-        # @board[7][1] = @piece.colorize(background: :white)
-
-
     end 
 
 
@@ -66,14 +60,19 @@ class Board attr_accessor :board
 
 
     def show_board
+        @temp = @board
         @board = @board.map {|array| array.join("")}
-        puts @board 
+        puts @board
+        puts "\n"
+
+        @board = @temp
+        
     end 
 
-    def delete_old_board
+    def clear_board()
         make_board()
-      
-
+        colour_board()
+        show_board()
     end 
 
     def move_knight(y, x)
@@ -117,7 +116,10 @@ board.colour_board()
 # board.show_board()
 knight = Knight.new()
 board.move_knight(2,7)
+puts "\n"
 board.show_board()
-board.delete_old_board()
-board.colour_board()
+board.clear_board()
+board.move_knight(3,1)
+puts "\n"
+
 board.show_board()
