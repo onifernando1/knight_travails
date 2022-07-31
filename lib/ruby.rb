@@ -1,11 +1,15 @@
+require 'colorize'
+
+
 class Board
     def initialize 
+        @board = Array.new(8,Array.new(8," "))
     end 
 
-    def make_board
-        board = Array.new(8,Array.new(8," "))
-        p board
+    def show_board
+        p @board
     end 
+
 
 
 end 
@@ -24,4 +28,5 @@ end
 knight = Knight.new()
 puts knight.piece
 board = Board.new()
-board.make_board
+board.show_board()
+puts "Hello".blue
