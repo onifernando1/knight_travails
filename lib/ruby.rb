@@ -7,6 +7,8 @@ class Board attr_accessor :board
         @white_square = "   ".colorize(background: :white)
         @black_square = "   ".colorize(background: :black)
         self.make_board()
+        @knight = Knight.new()
+
         
     end 
 
@@ -51,10 +53,10 @@ class Board attr_accessor :board
             end 
         end 
 
-            @string = " \u265E " 
-            @piece =  @string.encode("utf-8").light_white
+        #     @string = " \u265E " 
+        #     @piece =  @string.encode("utf-8").light_white
 
-        @board[7][1] = @piece.colorize(background: :white)
+        # @board[7][1] = @piece.colorize(background: :white)
 
 
     end 
@@ -68,17 +70,22 @@ class Board attr_accessor :board
         puts @board 
     end 
 
+    def delete_old_board
+        make_board()
+      
+
+    end 
+
     def move_knight(y, x)
-        knight = Knight.new()
+        
 
         if @board[x][y] == @black_square
-            knight.piece = knight.string.encode("utf-8").light_black
-            @board[x][y] = knight.piece.colorize(background: :black)
+            @knight.piece = @knight.string.encode("utf-8").light_black
+            @board[x][y] = @knight.piece.colorize(background: :black)
         elsif @board[x][y] == @white_square
-            knight.piece = knight.string.encode("utf-8").light_white
-            @board[x][y] = knight.piece.colorize(background: :white)
+            @knight.piece = @knight.string.encode("utf-8").light_white
+            @board[x][y] = @knight.piece.colorize(background: :white)
         end 
-
 
     end 
 
@@ -110,4 +117,7 @@ board.colour_board()
 # board.show_board()
 knight = Knight.new()
 board.move_knight(2,7)
+board.show_board()
+board.delete_old_board()
+board.colour_board()
 board.show_board()
