@@ -64,7 +64,6 @@ class Board attr_accessor :board
         @board = @board.map {|array| array.join("")}
         puts @board
         puts "\n"
-
         @board = @temp
         
     end 
@@ -99,15 +98,6 @@ class Knight
         @piece =  @string.encode("utf-8").light_white
     end 
 
-    # def move
-    #     puts "AAH"
-    #     @board[7][2] = @piece.colorize(background: :white)
-
-    # end 
-
-    def practice
-
-    end 
 
 end
 
@@ -123,3 +113,20 @@ board.move_knight(3,1)
 puts "\n"
 
 board.show_board()
+
+
+#pseudocode
+
+# knight has 8 possible moves 
+#1 node has starting node(data?), option_1 .. option_5
+#e.g #move_1 = 0,0, possible next options = each of 5 options 
+# singly directed graph
+#possible next moves = 5 children each 
+# knight can move 2 steps forward /back (y - 2 ) or (y+2) 
+#and one step right/ left (x+1) or (y+1)
+# use breadth first search - depth first search could be infinite 
+# basically find depth of each node and return shortest depth 
+#print series of moves 
+#leave a trail (change colour at each of the coordinates)
+#clear board 
+# show knight at final coordinates
