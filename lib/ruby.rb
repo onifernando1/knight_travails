@@ -51,11 +51,10 @@ class Board attr_accessor :board
             end 
         end 
 
+            @string = " \u265E " 
+            @piece =  @string.encode("utf-8").light_white
 
-        @string = " \u265E " 
-        @piece =  @string.encode("utf-8") 
-
-        @board[7][1] = @piece.colorize(background: :yellow)
+        @board[7][1] = @piece.colorize(background: :white)
 
 
     end 
@@ -69,24 +68,36 @@ class Board attr_accessor :board
         puts @board 
     end 
 
-    def practice
-    
+    def move_knight(y, x)
+        knight = Knight.new()
+
+        if @board[x][y] == @black_square
+            knight.piece = knight.string.encode("utf-8").light_black
+            @board[x][y] = knight.piece.colorize(background: :black)
+        elsif @board[x][y] == @white_square
+            knight.piece = knight.string.encode("utf-8").light_white
+            @board[x][y] = knight.piece.colorize(background: :white)
+        end 
+
+
     end 
 
 end 
 
 class Knight
 
-    attr_accessor :piece
+    attr_accessor :piece, :string
 
-    def initialize 
-        @string = "\u2658"
-        @piece =  @string.encode("utf-8")
+    def initialize
+        @string = " \u265E " 
+        @piece =  @string.encode("utf-8").light_white
     end 
 
-    def move(y, x)
+    # def move
+    #     puts "AAH"
+    #     @board[7][2] = @piece.colorize(background: :white)
 
-    end 
+    # end 
 
     def practice
 
@@ -96,6 +107,7 @@ end
 
 board = Board.new()
 board.colour_board()
-board.show_board()
+# board.show_board()
 knight = Knight.new()
-board.practice()
+board.move_knight(2,7)
+board.show_board()
