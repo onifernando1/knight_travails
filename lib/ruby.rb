@@ -101,56 +101,80 @@ class Knight
 
 end
 
-class Node attr_accessor :x, :y, :m1, :m2, :m3, :m4, :m5, :m6, :m7, :m8
+# class Node attr_accessor :x, :y, :m1, :m2, :m3, :m4, :m5, :m6, :m7, :m8
 
-    def initialize(x=2, y=7)
-        @x = x 
+#     def initialize(x=2, y=7)
+#         @x = x 
+#         @y = y
+#         @m1 = nil
+#         @m2 = nil
+#         @m3 = nil
+#         @m4 = nil 
+#         @m5 = nil 
+#         @m6 = nil
+#         @m7 = nil
+#         @m8 = nil
+#     end 
+
+
+# end 
+
+# class Tree
+
+#     def build_tree(node) # stack level too deep 
+
+#         #base case 
+
+#             if node.x > 7 || node.y > 7 || node.x < 0 || node.y < 0
+#                 return 
+#             end
+
+#         until node.x == 5 && node.y == 7
+
+
+#         # right two, one up or down 
+#             node.m1 = build_tree(Node.new(node.x + 2, node.y + 1))
+#         end 
+#         # node.m2 = build_tree(Node.new(node.x + 2, node.y - 1))
+
+#         # # # up two, one left or right 
+
+#         # node.m3 = build_tree(Node.new(node.x + 1, node.y + 2))
+#         # node.m4 = build_tree(Node.new(node.x - 1, node.y + 2))
+
+#         # # # left two, one up or down  stack level too deep 
+#         # node.m5 = build_tree(Node.new(node.x - 2, node.y + 1))
+#         # node.m6 = build_tree(Node.new(node.x - 2, node.y - 1))
+
+#         # # # down two, one left or right 
+
+#         # node.m7 = build_tree(Node.new(node.x + 1, node.y - 2))
+#         # node.m8 = build_tree(Node.new(node.x - 1, node.y - 2)) 
+        
+#         p "#{node.x},#{node.y}"
+
+#     end 
+
+# end 
+
+
+class GraphNode attr_accessor :x, :y, :value, :neighbours
+
+    def initialize(x, y) 
+
+        @x = x
         @y = y
-        @m1 = nil
-        @m2 = nil
-        @m3 = nil
-        @m4 = nil 
-        @m5 = nil 
-        @m6 = nil
-        @m7 = nil
-        @m8 = nil
+        @value = [@x, @y]
+        @neighbours = []
     end 
 
+    def add_edge(neighbour)
+        @neighbours << neighbour
+    end 
 
 end 
 
-class Tree
-
-    def build_tree(node)
-
-        #base case 
-        if node.x > 7 || node.y > 7 
-            return 
-        else
-
-        # right two, one up or down 
-        node.m1 = build_tree(Node.new(node.x + 2, node.y + 1))
-        node.m2 = build_tree(Node.new(node.x + 2, node.y - 1))
-
-        # # up two, one left or right 
-
-        node.m3 = build_tree(Node.new(node.x + 1, node.y + 2))
-        node.m4 = build_tree(Node.new(node.x - 1, node.y + 2))
-
-        # # left two, one up or down  stack level too deep 
-        node.m5 = build_tree(Node.new(node.x - 2, node.y + 1))
-        # node.m6 = build_tree(Node.new(node.x - 2, node.y - 1))
-
-        # # down two, one left or right 
-
-        # node.m7 = build_tree(Node.new(node.x + 1, node.y - 2))
-        # node.m8 = build_tree(Node.new(node.x - 1, node.y - 2)) 
-        
-        p "#{node.x},#{node.y}"
-
-        end 
-
-    end 
+class Graph 
 
 end 
 
@@ -160,9 +184,9 @@ board.colour_board()
 knight = Knight.new()
 board.move_knight(2,3)
 
-node = Node.new(2,3)
-tree = Tree.new()
-tree.build_tree(node)
+# node = Node.new(2,3)
+# tree = Tree.new()
+# tree.build_tree(node)
 #pseudocode
 
 # knight has 8 possible moves 
@@ -178,3 +202,5 @@ tree.build_tree(node)
 #leave a trail (change colour at each of the coordinates)
 #clear board 
 # show knight at final coordinates
+
+
