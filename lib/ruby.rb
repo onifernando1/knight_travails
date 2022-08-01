@@ -98,6 +98,31 @@ class Knight
         @piece =  @string.encode("utf-8").light_white
     end 
 
+    def possible_moves(xx, yy)
+
+        #possible moves of knight 
+
+        x_coordinates = [+2, +2, -2, -2, +1, +1, -1, -1]
+        y_coordinates = [+1, -1, +1, -1, +2, -2, +2, -2]
+
+        for i in (0..7)
+            x = xx + x_coordinates[i]
+            y = yy + y_coordinates[i]
+            puts "#{x},#{y}"
+        end 
+
+    end
+    
+    def move_valid? (x, y)
+
+        if x < 7 && x > 0 && y < 7 && y > 0 
+            return true 
+        else 
+            return false 
+        end 
+
+    end 
+
 
 end
 
@@ -172,9 +197,33 @@ class GraphNode attr_accessor :x, :y, :value, :neighbours
         @neighbours << neighbour
     end 
 
+    def add_node_neighbours
+
+    end 
+
 end 
 
-class Graph 
+class Graph attr_accessor :nodes
+
+    def initialize 
+        @nodes = []
+    end 
+
+    def add_node(x,y)
+        @nodes << GraphNode.new(x,y)
+    end 
+
+    def turn_board_to_nodes
+
+        a = [0,1,2,3,4,5,6,7]
+        a.each do |x|
+            a.each do |y|
+                self.add_node(x,y)
+            end
+        end
+        
+
+    end 
 
 end 
 
@@ -183,10 +232,38 @@ board.colour_board()
 # board.show_board()
 knight = Knight.new()
 board.move_knight(2,3)
+graph = Graph.new()
+# graph.add_node(0,0)
+# graph.add_node(0,1)
+# graph.add_node(1,0)
+# graph.nodes[0].add_edge(graph.nodes[1])
+# graph.nodes[0].add_edge(graph.nodes[2])
+# p graph.nodes[0]
+graph.turn_board_to_nodes()
+graph.nodes[0].add_edge(graph.nodes[1])
+p graph.nodes[0].neighbours
+graph.nodes[1]
+graph.nodes[8]
+p graph.nodes[50]
+p graph.nodes[51]
+knight.possible_moves(2,3)
 
-# node = Node.new(2,3)
-# tree = Tree.new()
-# tree.build_tree(node)
+# graph.nodes.each_with_index do |node, index|
+#     node[index].add_edge(graph.nodes[index+1]) 
+#     node[index].add_edge(graph.nodes[index+7)    
+   
+# end 
+
+
+
+
+
+
+
+
+
+
+
 #pseudocode
 
 # knight has 8 possible moves 
@@ -202,5 +279,5 @@ board.move_knight(2,3)
 #leave a trail (change colour at each of the coordinates)
 #clear board 
 # show knight at final coordinates
-
+#solving problem doesnt need to link to displaying board!
 
