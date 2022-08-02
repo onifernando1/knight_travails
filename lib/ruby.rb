@@ -1,4 +1,5 @@
 require 'colorize'
+require 'matrix'
 
 class Board attr_accessor :board
     
@@ -113,6 +114,33 @@ class Knight
 
     end
     
+  
+
+end
+
+class Node attr_accessor :x, :y, :distance
+
+    def initialize(x=nil, y=nil, distance=0)
+        @x = x
+        @y =y  
+        @distance = distance
+    end 
+
+
+end 
+
+class Tree attr_accessor :queue
+
+    def initialize 
+        @nodes = []
+    end 
+
+    def add_node(x, y, distance)
+        node = Node.new(x, y, distance)
+        @nodes.unshift(node)
+        node
+    end 
+
     def move_valid? (x, y)
 
         if x < 7 && x > 0 && y < 7 && y > 0 
@@ -123,8 +151,118 @@ class Knight
 
     end 
 
+    def min_steps(x_start, y_start, x_end, y_end)
 
-end
+        #check if in board
+
+        # unless move_valid?(x_start, y_start) && move_valid?(x_end, y_end)
+        #     puts "OUTSIDE OF BOARD"
+        # end 
+
+   
+        #possible moves of knight 
+
+        x_coordinates = [+2, +2, -2, -2, +1, +1, -1, -1]
+        y_coordinates = [+1, -1, +1, -1, +2, -2, +2, -2]
+
+
+
+        #matrix to track visited spaces
+
+        matrix = [
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false],
+                    [false,false,false,false,false,false,false,false]
+        ]
+
+        visited = matrix
+
+        #create root node 
+
+        root = add_node(x_start, y_start, 0)
+
+        #set start root node to visited 
+        visited[x_start][y_start] = true 
+
+        #pointer
+        current_node = root 
+        node_number = 0
+
+
+         #Return when reached destination
+
+        #  if current_node.x == x_end && current_node.y == y_end 
+        #     p current_node
+        #     p current_node.distance
+        #     return current_node.distance
+        # end 
+
+
+        #end goal reached?
+        end_goal = false 
+        
+        until current_node.x == x_end && current_node.y == y_end 
+
+            #go through possible moves 
+
+            for i in (0..7)
+
+
+                x = current_node.x + x_coordinates[i]
+                y = current_node.y + y_coordinates[i]
+
+                if move_valid?(x,y) && visited[x][y] == false 
+                    puts "#{x},#{y}"
+                    visited[x][y] = true 
+                    add_node(x,y,current_node.distance + 1 )
+
+                    
+                end
+
+            end 
+
+                current_node = @nodes[node_number + 1]
+                p current_node  
+            
+
+            if current_node.x == x_end && current_node.y == y_end 
+                p current_node
+                p current_node.distance
+                p "ASD"
+                visited = matrix
+                a = 10
+                return
+            end 
+        end 
+
+    end 
+
+    
+end 
+
+
+knight = Knight.new()
+tree = Tree.new()
+tree.add_node(2,7,0)
+tree.min_steps(2,7,6,6)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # class Node attr_accessor :x, :y, :m1, :m2, :m3, :m4, :m5, :m6, :m7, :m8
 
@@ -183,70 +321,70 @@ end
 # end 
 
 
-class GraphNode attr_accessor :x, :y, :value, :neighbours
+# class GraphNode attr_accessor :x, :y, :value, :neighbours
 
-    def initialize(x, y) 
+#     def initialize(x, y) 
 
-        @x = x
-        @y = y
-        @value = [@x, @y]
-        @neighbours = []
-    end 
+#         @x = x
+#         @y = y
+#         @value = [@x, @y]
+#         @neighbours = []
+#     end 
 
-    def add_edge(neighbour)
-        @neighbours << neighbour
-    end 
+#     def add_edge(neighbour)
+#         @neighbours << neighbour
+#     end 
 
-    def add_node_neighbours
+#     def add_node_neighbours
 
-    end 
+#     end 
 
-end 
+# end 
 
-class Graph attr_accessor :nodes
+# class Graph attr_accessor :nodes
 
-    def initialize 
-        @nodes = []
-    end 
+#     def initialize 
+#         @nodes = []
+#     end 
 
-    def add_node(x,y)
-        @nodes << GraphNode.new(x,y)
-    end 
+#     def add_node(x,y)
+#         @nodes << GraphNode.new(x,y)
+#     end 
 
-    def turn_board_to_nodes
+#     def turn_board_to_nodes
 
-        a = [0,1,2,3,4,5,6,7]
-        a.each do |x|
-            a.each do |y|
-                self.add_node(x,y)
-            end
-        end
+#         a = [0,1,2,3,4,5,6,7]
+#         a.each do |x|
+#             a.each do |y|
+#                 self.add_node(x,y)
+#             end
+#         end
         
 
-    end 
+#     end 
 
-end 
+# end 
 
-board = Board.new()
-board.colour_board()
-# board.show_board()
-knight = Knight.new()
-board.move_knight(2,3)
-graph = Graph.new()
-# graph.add_node(0,0)
-# graph.add_node(0,1)
-# graph.add_node(1,0)
+# board = Board.new()
+# board.colour_board()
+# # board.show_board()
+# knight = Knight.new()
+# board.move_knight(2,3)
+# graph = Graph.new()
+# # graph.add_node(0,0)
+# # graph.add_node(0,1)
+# # graph.add_node(1,0)
+# # graph.nodes[0].add_edge(graph.nodes[1])
+# # graph.nodes[0].add_edge(graph.nodes[2])
+# # p graph.nodes[0]
+# graph.turn_board_to_nodes()
 # graph.nodes[0].add_edge(graph.nodes[1])
-# graph.nodes[0].add_edge(graph.nodes[2])
-# p graph.nodes[0]
-graph.turn_board_to_nodes()
-graph.nodes[0].add_edge(graph.nodes[1])
-p graph.nodes[0].neighbours
-graph.nodes[1]
-graph.nodes[8]
-p graph.nodes[50]
-p graph.nodes[51]
-knight.possible_moves(2,3)
+# p graph.nodes[0].neighbours
+# graph.nodes[1]
+# graph.nodes[8]
+# p graph.nodes[50]
+# p graph.nodes[51]
+# knight.possible_moves(2,3)
 
 # graph.nodes.each_with_index do |node, index|
 #     node[index].add_edge(graph.nodes[index+1]) 
