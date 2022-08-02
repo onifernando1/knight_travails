@@ -188,7 +188,7 @@ class Tree attr_accessor :queue, :moves
 
         # root = add_node(x_start, y_start, 0)
          #pointer
-         current_node = add_node(x_start, y_start, 0) 
+         @current_node = add_node(x_start, y_start, 0) 
          node_number = 0
   
         #set start root node to visited 
@@ -196,7 +196,7 @@ class Tree attr_accessor :queue, :moves
 
        
         
-        until current_node.x == x_end && current_node.y == y_end 
+        until @current_node.x == x_end && @current_node.y == y_end 
             
 
             #go through possible moves 
@@ -204,13 +204,13 @@ class Tree attr_accessor :queue, :moves
             for i in (0..7)
 
                 puts i 
-                x = current_node.x + x_coordinates[i]
-                y = current_node.y + y_coordinates[i]
+                x = @current_node.x + x_coordinates[i]
+                y = @current_node.y + y_coordinates[i]
 
                 if move_valid?(x,y) && visited[x][y] == false 
                     # puts "#{x},#{y}"
                     visited[x][y] = true 
-                    @moves << add_node(x,y,current_node.distance + 1 )
+                    @moves << add_node(x,y,@current_node.distance + 1, @current_node )
                 end
                 
 
@@ -218,14 +218,14 @@ class Tree attr_accessor :queue, :moves
 
             #move to next node in @nodes
                 node_number += 1 
-                current_node = @queue[node_number]
-                p current_node 
+                @current_node = @queue[node_number]
+                p @current_node 
                 p "Above node is current node"
                 # visited = matrix
                 
 
         end 
-        p current_node.distance
+        p @current_node.distance
         p "ABOVE IS THE MOVES?"
         visited = matrix
 
@@ -235,23 +235,8 @@ class Tree attr_accessor :queue, :moves
 
     def track_moves
 
-
-        @ordered_moves = []
-
-        reversed = @moves.reverse
-        p "REVERSED BELOW"
-        reversed.each do |node|
-            puts "NODE:#{node}
-                DISTANCE: #{node.distance}
-                COORD: #{node.co_ordinates}"
-        end 
-        p "REVERSEWD ABOVE"
-
-        max_moves = reversed[0]
-
-        @ordered_moves << reversed[0] 
-
-        p @ordered_moves
+        p @current_node 
+        p "CURRENT NODE ABOVE!!"
 
 
     end 
