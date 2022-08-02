@@ -78,6 +78,7 @@ class Board attr_accessor :board
 
     def move_knight(y, x)
         
+        x = 7 - x
 
         if @board[x][y] == @black_square
             @knight.piece = @knight.string.encode("utf-8").light_black
@@ -89,14 +90,27 @@ class Board attr_accessor :board
 
     end 
 
-    def highlight_path
+    def change_colour_of_square(y, x)
 
-        @path.each do |co| 
-            p co
+        @board[x][y] = "   ".colorize(background: :light_red)
+
+    end 
+
+    def highlight_path
+        
+        x = @path[-1][0]
+        y = @path[-1][1]
+        move_knight(x,y)
+        show_board()
+
+        rest_of_path =  @path[1...-1]
+        rest_of_path.each do |co|
             x = co[0]
-            y = co[1]
-            move_knight(x,y)
+            y = 7 - co[1]
+            change_colour_of_square(x,y)
             show_board()
+
+
         end 
 
     end 
@@ -274,8 +288,8 @@ end
 
 knight = Knight.new()
 tree = Tree.new()
-starting_x = 3 
-starting_y = 6
+starting_x = 7 
+starting_y = 7
 ending_x = 4
 ending_y = 3 
 tree.add_node(starting_x,starting_y,0)
