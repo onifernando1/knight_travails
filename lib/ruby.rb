@@ -4,11 +4,12 @@ require 'matrix'
 class Board attr_accessor :board
     
     
-    def initialize 
+    def initialize(path)
         @white_square = "   ".colorize(background: :white)
         @black_square = "   ".colorize(background: :black)
         self.make_board()
         @knight = Knight.new()
+        @path = path
 
         
     end 
@@ -82,8 +83,20 @@ class Board attr_accessor :board
             @knight.piece = @knight.string.encode("utf-8").light_black
             @board[x][y] = @knight.piece.colorize(background: :black)
         elsif @board[x][y] == @white_square
-            @knight.piece = @knight.string.encode("utf-8").light_white
+            @knight.piece = @knight.string.encode("utf-8").light_black
             @board[x][y] = @knight.piece.colorize(background: :white)
+        end 
+
+    end 
+
+    def highlight_path
+
+        @path.each do |co| 
+            p co
+            x = co[0]
+            y = co[1]
+            move_knight(x,y)
+            show_board()
         end 
 
     end 
@@ -131,11 +144,13 @@ class Node attr_accessor :x, :y, :distance, :co_ordinates, :parent
 
 end 
 
-class Tree attr_accessor :queue, :moves
+class Tree attr_accessor :queue, :moves, :path
 
     def initialize 
         @queue = []
         @moves = []
+        @path = []
+
     end 
 
     def add_node(x, y, distance, parent=nil)
@@ -239,17 +254,16 @@ class Tree attr_accessor :queue, :moves
         p @current_node.co_ordinates
         p "CURRENT NODE ABOVE!!"
 
-        path = []
         current = @current_node
 
         puts "You made it in #{@current_node.distance} moves"
 
         for i in (0..@current_node.distance)
-            path.prepend(current.co_ordinates)
+            @path.prepend(current.co_ordinates)
             current = current.parent
         end 
 
-        p path
+        p @path
 
     end 
 
@@ -258,9 +272,18 @@ class Tree attr_accessor :queue, :moves
     
 end 
 
-
 knight = Knight.new()
 tree = Tree.new()
-tree.add_node(3,3,0)
-tree.min_steps(3,3,4,3)
+starting_x = 3 
+starting_y = 6
+ending_x = 4
+ending_y = 3 
+tree.add_node(starting_x,starting_y,0)
+tree.min_steps(starting_x,starting_y,ending_x,ending_y)
+board = Board.new(tree.path)
+board.make_board()
+board.colour_board()
+board.move_knight(starting_x, starting_y)
+board.show_board()
 tree.print_path()
+board.highlight_path()
