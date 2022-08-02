@@ -118,32 +118,34 @@ class Knight
 
 end
 
-class Node attr_accessor :x, :y, :distance
+class Node attr_accessor :x, :y, :distance, :co_ordinates
 
     def initialize(x=nil, y=nil, distance=0)
         @x = x
         @y =y  
+        @co_ordinates = [x,y]
         @distance = distance
     end 
 
 
 end 
 
-class Tree attr_accessor :queue
+class Tree attr_accessor :queue, :moves
 
     def initialize 
         @nodes = []
+        @moves = []
     end 
 
     def add_node(x, y, distance)
         node = Node.new(x, y, distance)
-        @nodes.unshift(node)
+        @nodes << node 
         node
     end 
 
     def move_valid? (x, y)
 
-        if x < 7 && x > 0 && y < 7 && y > 0 
+        if x < 8 && x > 0 && y < 8 && y > 0 
             return true 
         else 
             return false 
@@ -182,65 +184,93 @@ class Tree attr_accessor :queue
 
         visited = matrix
 
-        #create root node 
 
-        root = add_node(x_start, y_start, 0)
+        # root = add_node(x_start, y_start, 0)
+         #pointer
+         current_node = add_node(x_start, y_start, 0) 
+         node_number = 0
+  
+         #end goal reached?
+  
+         end_goal = false 
 
         #set start root node to visited 
         visited[x_start][y_start] = true 
 
-        #pointer
-        current_node = root 
-        node_number = 0
+       
 
-
-         #Return when reached destination
-
-        #  if current_node.x == x_end && current_node.y == y_end 
-        #     p current_node
-        #     p current_node.distance
-        #     return current_node.distance
-        # end 
-
-
-        #end goal reached?
-        end_goal = false 
         
-        until current_node.x == x_end && current_node.y == y_end 
+        until end_goal == true 
+            
+
+             #Return when reached destination
+            
+            if current_node.x == x_end && current_node.y == y_end 
+                p current_node
+                p current_node.distance
+                p "DONE"
+                visited = matrix
+                end_goal = true 
+                return 
+            end 
 
             #go through possible moves 
 
             for i in (0..7)
 
-
+                puts i 
                 x = current_node.x + x_coordinates[i]
                 y = current_node.y + y_coordinates[i]
 
                 if move_valid?(x,y) && visited[x][y] == false 
-                    puts "#{x},#{y}"
+                    # puts "#{x},#{y}"
                     visited[x][y] = true 
-                    add_node(x,y,current_node.distance + 1 )
-
-                    
+                    new_nodes = add_node(x,y,current_node.distance + 1 )
+                    @moves << new_nodes.co_ordinates
+                    new_nodes
                 end
+                
 
             end 
 
-                current_node = @nodes[node_number + 1]
-                p current_node  
-            
-
-            if current_node.x == x_end && current_node.y == y_end 
-                p current_node
-                p current_node.distance
-                p "ASD"
+            #move to next node in @nodes
+                node_number += 1 
+                if @nodes[node_number] == nil
+                    return 
+                end 
+                current_node = @nodes[node_number]
+                p current_node 
+                p "Above node is current node"
                 visited = matrix
-                a = 10
-                return
-            end 
+                
+
         end 
 
+
+    
     end 
+
+    def track_moves
+
+        p @moves
+
+        # @ordered_moves = []
+
+        # reversed = @moves.reverse
+
+        # p reversed
+
+        # max_moves = reversed[0].distance
+
+
+
+        # @ordered_moves.unshift(reversed[0]) 
+
+        # p @ordered_moves
+
+
+    end 
+
 
     
 end 
@@ -248,8 +278,9 @@ end
 
 knight = Knight.new()
 tree = Tree.new()
-tree.add_node(2,7,0)
-tree.min_steps(2,7,6,6)
+tree.add_node(3,3,0)
+tree.min_steps(3,3,4,3)
+tree.track_moves()
 
 
 
