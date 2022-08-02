@@ -118,13 +118,14 @@ class Knight
 
 end
 
-class Node attr_accessor :x, :y, :distance, :co_ordinates
+class Node attr_accessor :x, :y, :distance, :co_ordinates, :parent
 
-    def initialize(x=nil, y=nil, distance=0)
+    def initialize(x=nil, y=nil, distance=0, parent=nil)
         @x = x
         @y =y  
         @co_ordinates = [x,y]
         @distance = distance
+        @parent = parent
     end 
 
 
@@ -137,8 +138,8 @@ class Tree attr_accessor :queue, :moves
         @moves = []
     end 
 
-    def add_node(x, y, distance)
-        node = Node.new(x, y, distance)
+    def add_node(x, y, distance, parent=nil)
+        node = Node.new(x, y, distance, parent)
         @queue << node 
         node
     end 
