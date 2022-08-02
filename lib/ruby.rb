@@ -7,7 +7,7 @@ class Board attr_accessor :board
     def initialize(path)
         @white_square = "   ".colorize(background: :white)
         @black_square = "   ".colorize(background: :black)
-        self.make_board()
+        make_board()
         @knight = Knight.new()
         @path = path
 
@@ -70,11 +70,6 @@ class Board attr_accessor :board
         
     end 
 
-    # def clear_board()
-    #     make_board()
-    #     colour_board()
-    #     show_board()
-    # end 
 
     def move_knight(y, x)
         
@@ -175,13 +170,13 @@ class Node attr_accessor :x, :y, :distance, :co_ordinates, :parent
 
 end 
 
-class Tree attr_accessor :queue, :moves, :path
+class Tree attr_accessor :queue, :moves, :path, :continue
 
     def initialize 
         @queue = []
         @moves = []
         @path = []
-
+        @continue = true 
     end 
 
     def add_node(x, y, distance, parent=nil)
@@ -204,8 +199,11 @@ class Tree attr_accessor :queue, :moves, :path
 
         #check if in board
 
+
+
         unless move_valid?(x_start, y_start) && move_valid?(x_end, y_end)
             puts "OUTSIDE OF BOARD"
+            @continue = false 
             return 
         end 
 
@@ -300,15 +298,22 @@ tree = Tree.new()
 
 # change the coordinates below 
 starting_x = 5
-starting_y = 7
+starting_y = 8
 ending_x = 6
 ending_y = 6
 
+##
 
 tree.add_node(starting_x,starting_y,0)
 tree.min_steps(starting_x,starting_y,ending_x,ending_y)
-board = Board.new(tree.path)
 
-board.start()
-tree.print_path()
-board.highlight_path()
+if tree.continue == true 
+
+    board = Board.new(tree.path)
+    board.start()
+    tree.print_path()
+    board.highlight_path()
+
+else 
+    puts "Sorry, try co-ordinates from 0-7!"
+end 
