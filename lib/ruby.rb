@@ -190,17 +190,13 @@ class Tree attr_accessor :queue, :moves
          current_node = add_node(x_start, y_start, 0) 
          node_number = 0
   
-         #end goal reached?
-  
-         end_goal = false 
-
         #set start root node to visited 
         visited[x_start][y_start] = true 
 
        
 
         
-        until end_goal == true 
+        until current_node.x == x_end && current_node.y == y_end 
             
 
              #Return when reached destination
@@ -208,6 +204,7 @@ class Tree attr_accessor :queue, :moves
             if current_node.x == x_end && current_node.y == y_end 
                 p current_node
                 p current_node.distance
+                p "ABOVE IS THE MOVES?"
                 p "DONE"
                 visited = matrix
                 end_goal = true 
@@ -226,7 +223,7 @@ class Tree attr_accessor :queue, :moves
                     # puts "#{x},#{y}"
                     visited[x][y] = true 
                     new_nodes = add_node(x,y,current_node.distance + 1 )
-                    @moves << new_nodes.co_ordinates
+                    @moves << new_nodes
                     new_nodes
                 end
                 
@@ -245,28 +242,31 @@ class Tree attr_accessor :queue, :moves
                 
 
         end 
-
+        p current_node.distance
+        p "ABOVE IS THE MOVES?"
 
     
     end 
 
     def track_moves
 
-        p @moves
 
-        # @ordered_moves = []
+        @ordered_moves = []
 
-        # reversed = @moves.reverse
+        reversed = @moves.reverse
+        p "REVERSED BELOW"
+        reversed.each do |node|
+            puts "NODE:#{node}
+                DISTANCE: #{node.distance}
+                COORD: #{node.co_ordinates}"
+        end 
+        p "REVERSEWD ABOVE"
 
-        # p reversed
+        max_moves = reversed[0]
 
-        # max_moves = reversed[0].distance
+        @ordered_moves << reversed[0] 
 
-
-
-        # @ordered_moves.unshift(reversed[0]) 
-
-        # p @ordered_moves
+        p @ordered_moves
 
 
     end 
