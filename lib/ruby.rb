@@ -97,12 +97,17 @@ class Board attr_accessor :board
     end 
 
     def highlight_path
-        
-        x = @path[-1][0]
-        y = @path[-1][1]
+
+        # start
+        x = @path[0][0]
+        y = @path[0][1]
         move_knight(x,y)
         show_board()
 
+
+
+
+        # middle 
         rest_of_path =  @path[1...-1]
         rest_of_path.each do |co|
             x = co[0]
@@ -113,6 +118,18 @@ class Board attr_accessor :board
 
         end 
 
+
+        # end 
+        x = @path[-1][0]
+        y = @path[-1][1]
+        move_knight(x,y)
+        show_board()
+
+    end 
+
+    def start
+        make_board()
+        colour_board()
     end 
 
 end 
@@ -233,12 +250,10 @@ class Tree attr_accessor :queue, :moves, :path
 
             for i in (0..7)
 
-                puts i 
                 x = @current_node.x + x_coordinates[i]
                 y = @current_node.y + y_coordinates[i]
 
                 if move_valid?(x,y) && visited[x][y] == false 
-                    # puts "#{x},#{y}"
                     visited[x][y] = true 
                     @moves << add_node(x,y,@current_node.distance + 1, @current_node )
                 end
@@ -249,14 +264,10 @@ class Tree attr_accessor :queue, :moves, :path
             #move to next node in @nodes
                 node_number += 1 
                 @current_node = @queue[node_number]
-                p @current_node 
-                p "Above node is current node"
                 # visited = matrix
                 
 
         end 
-        p @current_node.distance
-        p "ABOVE IS THE MOVES?"
         visited = matrix
 
 
@@ -265,8 +276,6 @@ class Tree attr_accessor :queue, :moves, :path
 
     def print_path
 
-        p @current_node.co_ordinates
-        p "CURRENT NODE ABOVE!!"
 
         current = @current_node
 
@@ -288,16 +297,18 @@ end
 
 knight = Knight.new()
 tree = Tree.new()
-starting_x = 7 
+
+# change the coordinates below 
+starting_x = 5
 starting_y = 7
-ending_x = 4
-ending_y = 3 
+ending_x = 6
+ending_y = 6
+
+
 tree.add_node(starting_x,starting_y,0)
 tree.min_steps(starting_x,starting_y,ending_x,ending_y)
 board = Board.new(tree.path)
-board.make_board()
-board.colour_board()
-board.move_knight(starting_x, starting_y)
-board.show_board()
+
+board.start()
 tree.print_path()
 board.highlight_path()
