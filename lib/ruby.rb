@@ -70,11 +70,11 @@ class Board attr_accessor :board
         
     end 
 
-    def clear_board()
-        make_board()
-        colour_board()
-        show_board()
-    end 
+    # def clear_board()
+    #     make_board()
+    #     colour_board()
+    #     show_board()
+    # end 
 
     def move_knight(y, x)
         
