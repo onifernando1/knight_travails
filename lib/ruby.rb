@@ -133,13 +133,13 @@ end
 class Tree attr_accessor :queue, :moves
 
     def initialize 
-        @nodes = []
+        @queue = []
         @moves = []
     end 
 
     def add_node(x, y, distance)
         node = Node.new(x, y, distance)
-        @nodes << node 
+        @queue << node 
         node
     end 
 
@@ -217,10 +217,10 @@ class Tree attr_accessor :queue, :moves
 
             #move to next node in @nodes
                 node_number += 1 
-                current_node = @nodes[node_number]
+                current_node = @queue[node_number]
                 p current_node 
                 p "Above node is current node"
-                visited = matrix
+                # visited = matrix
                 
 
         end 
