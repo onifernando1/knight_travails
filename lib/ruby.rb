@@ -158,9 +158,10 @@ class Tree attr_accessor :queue, :moves
 
         #check if in board
 
-        # unless move_valid?(x_start, y_start) && move_valid?(x_end, y_end)
-        #     puts "OUTSIDE OF BOARD"
-        # end 
+        unless move_valid?(x_start, y_start) && move_valid?(x_end, y_end)
+            puts "OUTSIDE OF BOARD"
+            return 
+        end 
 
    
         #possible moves of knight 
