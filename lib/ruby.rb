@@ -194,22 +194,9 @@ class Tree attr_accessor :queue, :moves
         visited[x_start][y_start] = true 
 
        
-
         
         until current_node.x == x_end && current_node.y == y_end 
             
-
-             #Return when reached destination
-            
-            if current_node.x == x_end && current_node.y == y_end 
-                p current_node
-                p current_node.distance
-                p "ABOVE IS THE MOVES?"
-                p "DONE"
-                visited = matrix
-                end_goal = true 
-                return 
-            end 
 
             #go through possible moves 
 
@@ -222,9 +209,7 @@ class Tree attr_accessor :queue, :moves
                 if move_valid?(x,y) && visited[x][y] == false 
                     # puts "#{x},#{y}"
                     visited[x][y] = true 
-                    new_nodes = add_node(x,y,current_node.distance + 1 )
-                    @moves << new_nodes
-                    new_nodes
+                    @moves << add_node(x,y,current_node.distance + 1 )
                 end
                 
 
@@ -244,6 +229,8 @@ class Tree attr_accessor :queue, :moves
         end 
         p current_node.distance
         p "ABOVE IS THE MOVES?"
+        visited = matrix
+
 
     
     end 
