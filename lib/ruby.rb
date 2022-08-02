@@ -233,10 +233,22 @@ class Tree attr_accessor :queue, :moves
     
     end 
 
-    def track_moves
+    def print_path
 
-        p @current_node 
+        p @current_node.co_ordinates
         p "CURRENT NODE ABOVE!!"
+
+        path = []
+        current = @current_node
+
+        puts "You made it in #{@current_node.distance} moves"
+
+        for i in (0..@current_node.distance)
+            path.prepend(current.co_ordinates)
+            current = current.parent
+        end 
+
+        p path
 
 
     end 
@@ -250,7 +262,7 @@ knight = Knight.new()
 tree = Tree.new()
 tree.add_node(3,3,0)
 tree.min_steps(3,3,4,3)
-tree.track_moves()
+tree.print_path()
 
 
 
