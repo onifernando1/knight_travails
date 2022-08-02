@@ -217,9 +217,6 @@ class Tree attr_accessor :queue, :moves
 
             #move to next node in @nodes
                 node_number += 1 
-                if @nodes[node_number] == nil
-                    return 
-                end 
                 current_node = @nodes[node_number]
                 p current_node 
                 p "Above node is current node"
